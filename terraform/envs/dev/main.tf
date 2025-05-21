@@ -35,8 +35,8 @@ module "rds_sg" {
 }
 
 module "backend_ecr" {
-  source          = "../../modules/ecr"
-  repository_name = "backend-service"
+  source           = "../../modules/ecr"
+  repository_name  = "backend-service"
   tags = {
     Environment = "dev"
     Service     = "backend"
@@ -44,11 +44,12 @@ module "backend_ecr" {
 }
 
 module "messaging_ecr" {
-  source          = "../../modules/ecr"
-  repository_name = "messaging-service"
+  source           = "../../modules/ecr"
+  repository_name  = "messaging-service"
   tags = {
     Environment = "dev"
     Service     = "messaging"
   }
 }
+
 
