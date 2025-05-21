@@ -33,6 +33,17 @@ variable "alb_sg_ingress" {
   }))
 }
 
+variable "alb_sg_egress" {
+  description = "Egress rules for ECS"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
 variable "ecs_sg_ingress" {
   type = list(object({
     description     = string
@@ -44,6 +55,17 @@ variable "ecs_sg_ingress" {
   }))
 }
 
+variable "ecs_sg_egress" {
+  description = "Egress rules for ECS"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
 variable "rds_sg_ingress" {
   type = list(object({
     description     = string
@@ -52,6 +74,17 @@ variable "rds_sg_ingress" {
     protocol        = string
     cidr_blocks     = list(string)
     security_groups = list(string)
+  }))
+}
+
+variable "rds_sg_egress" {
+  description = "Egress rules for ECS"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
   }))
 }
 

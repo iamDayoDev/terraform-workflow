@@ -16,6 +16,16 @@ alb_sg_ingress = [
   }
 ]
 
+alb_sg_egress = [
+  {
+    description = "Allow all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
 ecs_sg_ingress = [
   {
     description     = "Allow from ALB"
@@ -27,6 +37,16 @@ ecs_sg_ingress = [
   }
 ]
 
+ecs_sg_egress = [
+  {
+    description = "Allow all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
 rds_sg_ingress = [
   {
     description     = "Allow PostgreSQL"
@@ -35,5 +55,15 @@ rds_sg_ingress = [
     protocol        = "tcp"
     cidr_blocks     = []
     security_groups = [] # Set dynamically if needed
+  }
+]
+
+rds_sg_egress = [
+  {
+    description = "Allow all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 ]

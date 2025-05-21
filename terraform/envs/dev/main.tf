@@ -30,17 +30,17 @@ module "ecs_sg" {
   name        = "ecs-sg"
   description = "Allow traffic from ALB"
   vpc_id      = module.vpc.vpc_id
+  ingress_rules  = var.alb_sg_ingress
+  egress_rules   = var.alb_sg_egress
+}
 
-  ingress_rules = [
-    {
-      description     = "Allow from ALB"
-      from_port       = 3000
-      to_port         = 3000
-      protocol        = "tcp"
-      cidr_blocks     = []
-      security_groups = [module.alb_sg.security_group_id]
-    }
-  ]
+module "ecs_sg" {
+  source      = "../../modules/sg"
+  name        = "ecs-sg"
+  description = "Allow traffic from ALB"
+  vpc_id      = module.vpc.vpc_id
+  ingress_rules  = var.ecs_sg_ingress
+  egress_rules   = var.ecs_sg_egress
 }
 
 module "rds_sg" {
@@ -48,15 +48,6 @@ module "rds_sg" {
   name        = "rds-sg"
   description = "Allow DB traffic from ECS"
   vpc_id      = module.vpc.vpc_id
-
-  ingress_rules = [
-    {
-      description     = "Allow PostgreSQL"
-      from_port       = 5432
-      to_port         = 5432
-      protocol        = "tcp"
-      cidr_blocks     = []
-      security_groups = [module.ecs_sg.security_group_id]
-    }
-  ]
+  ingress_rules  = var.rds_sg_ingress
+  egress_rules   = var.rds_sg_egress
 }
