@@ -34,15 +34,6 @@ module "rds_sg" {
   egress_rules  = var.rds_sg_egress
 }
 
-module "ecr" {
-  source          = "../../modules/ecr"
-  repository_name = "backend-logic"
-  tags = {
-    Environment = "dev"
-    Project     = "backend-test"
-  }
-}
-
 module "backend_ecr" {
   source          = "../../modules/ecr"
   repository_name = "backend-service"
