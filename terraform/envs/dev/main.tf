@@ -35,7 +35,7 @@ module "rds_sg" {
 }
 
 module "backend_ecr" {
-  source           = "../modules/ecr"
+  source           = "../../modules/ecr"
   repository_name  = "backend-service"
   tags = {
     Environment = "dev"
