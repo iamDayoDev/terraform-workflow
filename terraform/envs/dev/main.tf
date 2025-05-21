@@ -13,7 +13,16 @@ module "alb_sg" {
   description = "Allow HTTP from internet"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_rules = var.alb_sg_ingress
+  ingress_rules = [
+    {
+      description     = "Allow HTTP from internet"
+      from_port       = 80
+      to_port         = 80
+      protocol        = "tcp"
+      cidr_blocks     = ["0.0.0.0/0"]
+      security_groups = []
+    }
+  ]
 }
 
 module "ecs_sg" {
