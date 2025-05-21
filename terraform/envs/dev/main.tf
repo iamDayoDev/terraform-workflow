@@ -8,28 +8,56 @@ module "vpc" {
 }
 
 module "alb_sg" {
-  source      = "../../modules/sg"
-  name        = "alb-sg"
-  description = "Allow traffic from ALB"
-  vpc_id      = module.vpc.vpc_id
-  ingress_rules  = var.alb_sg_ingress
-  egress_rules   = var.alb_sg_egress
+  source        = "../../modules/sg"
+  name          = "alb-sg"
+  description   = "Allow traffic from ALB"
+  vpc_id        = module.vpc.vpc_id
+  ingress_rules = var.alb_sg_ingress
+  egress_rules  = var.alb_sg_egress
 }
 
 module "ecs_sg" {
-  source      = "../../modules/sg"
-  name        = "ecs-sg"
-  description = "Allow traffic from ECS"
-  vpc_id      = module.vpc.vpc_id
-  ingress_rules  = var.ecs_sg_ingress
-  egress_rules   = var.ecs_sg_egress
+  source        = "../../modules/sg"
+  name          = "ecs-sg"
+  description   = "Allow traffic from ECS"
+  vpc_id        = module.vpc.vpc_id
+  ingress_rules = var.ecs_sg_ingress
+  egress_rules  = var.ecs_sg_egress
 }
 
 module "rds_sg" {
-  source      = "../../modules/sg"
-  name        = "rds-sg"
-  description = "Allow DB traffic from RDS"
-  vpc_id      = module.vpc.vpc_id
-  ingress_rules  = var.rds_sg_ingress
-  egress_rules   = var.rds_sg_egress
+  source        = "../../modules/sg"
+  name          = "rds-sg"
+  description   = "Allow DB traffic from RDS"
+  vpc_id        = module.vpc.vpc_id
+  ingress_rules = var.rds_sg_ingress
+  egress_rules  = var.rds_sg_egress
 }
+
+module "ecr" {
+  source          = "../../modules/ecr"
+  repository_name = "backend-logic"
+  tags = {
+    Environment = "dev"
+    Project     = "backend-test"
+  }
+}
+
+module "backend_ecr" {
+  source          = "../../modules/ecr"
+  repository_name = "backend-service"
+  tags = {
+    Environment = "dev"
+    Service     = "backend"
+  }
+}
+
+module "messaging_ecr" {
+  source          = "../../modules/ecr"
+  repository_name = "messaging-service"
+  tags = {
+    Environment = "dev"
+    Service     = "messaging"
+  }
+}
+
