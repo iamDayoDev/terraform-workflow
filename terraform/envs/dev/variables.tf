@@ -61,7 +61,7 @@ variable "tags" {
   type        = map(string)
   default = {
     Environment = "dev"
-    Project     = "workmate"
+    Project     = "workmate-dev"
     Owner       = "Adedayo"
   }
 }
