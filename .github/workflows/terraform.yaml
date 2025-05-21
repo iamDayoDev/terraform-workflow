@@ -42,7 +42,7 @@ jobs:
       run: terraform plan 
       working-directory: terraform/envs/dev
 
-    # - name: Apply Terraform
-    #   run: terraform apply
-    #   working-directory: terraform/envs/dev
+    - name: Apply Terraform
+      run: terraform apply
+      working-directory: terraform/envs/dev
      
