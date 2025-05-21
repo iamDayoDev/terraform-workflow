@@ -1,10 +1,10 @@
 module "vpc" {
   source              = "../../modules/vpc"
-  project_name        = "backend-test"
-  vpc_cidr            = "10.0.0.0/16"
-  azs                 = ["us-east-1a", "us-east-1b"]
-  public_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
-  private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+  project_name        = var.project_name
+  vpc_cidr            = var.vpc_cidr
+  azs                 = var.azs
+  public_subnet_cidrs = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
 }
 
 module "alb_sg" {
@@ -13,15 +13,7 @@ module "alb_sg" {
   description = "Allow HTTP from internet"
   vpc_id      = module.vpc.vpc_id
 
-  ingress_rules = [
-    {
-      description = "Allow HTTP"
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
+  ingress_rules = var.alb_sg_ingress
 }
 
 module "ecs_sg" {
