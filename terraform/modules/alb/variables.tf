@@ -90,8 +90,3 @@ variable "health_check_matcher" {
   description = "HTTP code matcher for success"
   default     = "200"
 }
-
-# variable "listener_rule_arn" {
-#   description = "ARN of the ALB target group for the ECS service"
-#   type        = string
-# }

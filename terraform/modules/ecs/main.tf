@@ -58,7 +58,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   depends_on = [
     aws_ecs_task_definition.task-definition,
-    var.listener_rule_arn  # <- Make sure you pass this from root
+    var.listener_rule_arn  
   ]
 
 }
