@@ -16,23 +16,16 @@ module "alb_sg" {
   egress_rules  = var.alb_sg_egress
 }
 
-module "ecs_sg" {
-  source        = "../../modules/sg"
-  name          = "ecs-sg"
-  description   = "Allow traffic from ECS"
-  vpc_id        = module.vpc.vpc_id
-  ingress_rules = var.alb_sg_ingress
-  egress_rules  = var.alb_sg_egress
-}
+// Uncomment this block if you need an RDS security group
 
-module "rds_sg" {
-  source        = "../../modules/sg"
-  name          = "rds-sg"
-  description   = "Allow DB traffic from RDS"
-  vpc_id        = module.vpc.vpc_id
-  ingress_rules = var.rds_sg_ingress
-  egress_rules  = var.rds_sg_egress
-}
+# module "rds_sg" {
+#   source        = "../../modules/sg"
+#   name          = "rds-sg"
+#   description   = "Allow DB traffic from RDS"
+#   vpc_id        = module.vpc.vpc_id
+#   ingress_rules = var.rds_sg_ingress
+#   egress_rules  = var.rds_sg_egress
+# }
 
 module "backend_ecr" {
   source          = "../../modules/ecr"
