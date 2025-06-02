@@ -2,6 +2,10 @@ variable "project_name" {
   type        = string
   description = "Project name prefix"
 }
+variable "aws_region" {
+  type        = string
+  description = "AWS region"
+}
 
 variable "vpc_cidr" {
   type        = string
@@ -44,27 +48,6 @@ variable "alb_sg_egress" {
   }))
 }
 
-variable "ecs_sg_ingress" {
-  type = list(object({
-    description     = string
-    from_port       = number
-    to_port         = number
-    protocol        = string
-    cidr_blocks     = list(string)
-    security_groups = list(string)
-  }))
-}
-
-variable "ecs_sg_egress" {
-  description = "Egress rules for ECS"
-  type = list(object({
-    description = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-}
 
 variable "rds_sg_ingress" {
   type = list(object({
@@ -98,3 +81,66 @@ variable "tags" {
     Owner       = "Adedayo"
   }
 }
+
+# Backend service variables
+variable "backend_cpu" {
+  type = number
+}
+
+variable "backend_memory" {
+  type = number
+}
+
+variable "backend_image" {
+  type = string
+}
+
+variable "backend_container_port" {
+  type = number
+}
+
+variable "backend_desired_count" {
+  type = number
+}
+
+variable "backend_ecs_execution_role_arn" {
+  type = string
+}
+
+variable "backend_ecs_task_role_arn" {
+  type = string
+}
+
+
+# Messaging service variables
+variable "messaging_cpu" {
+  type = number
+}
+
+variable "messaging_memory" {
+  type = number
+}
+
+variable "messaging_image" {
+  type = string
+}
+
+variable "messaging_container_port" {
+  type = number
+}
+
+variable "messaging_desired_count" {
+  type = number
+}
+
+variable "messaging_ecs_execution_role_arn" {
+  type = string
+}
+
+variable "messaging_ecs_task_role_arn" {
+  type = string
+}
+
+
+
+

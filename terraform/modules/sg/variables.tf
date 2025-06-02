@@ -13,6 +13,13 @@ variable "vpc_id" {
   description = "VPC ID"
 }
 
+variable "security_group_ids" {
+  type        = list(string)
+  description = "List of security group IDs to associate with this security group"
+  default     = []
+  
+}
+
 variable "ingress_rules" {
   type = list(object({
     description     = string

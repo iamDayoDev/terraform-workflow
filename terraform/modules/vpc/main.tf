@@ -1,6 +1,5 @@
-# This module creates a VPC with public and private subnets, an internet gateway, and route tables.
-# It is designed to be reusable across different environments (e.g., dev, staging, prod).
-resource "aws_vpc" "main" {
+#VPC
+resource "aws_vpc" "dev-vpc" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -9,18 +8,18 @@ resource "aws_vpc" "main" {
   }
 }
 
-# This module creates an internet gateway and attaches it to the VPC. 
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.main.id
+ 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.dev-vpc.id
   tags = {
     Name = "${var.project_name}-igw"
   }
 }
 
-# This module creates public and private subnets in the specified availability zones.
+
 resource "aws_subnet" "public" {
   count                   = length(var.public_subnet_cidrs)
-  vpc_id                  = aws_vpc.main.id
+  vpc_id                  = aws_vpc.dev-vpc.id
   cidr_block              = var.public_subnet_cidrs[count.index]
   availability_zone       = element(var.azs, count.index)
   map_public_ip_on_launch = true
@@ -30,10 +29,10 @@ resource "aws_subnet" "public" {
   }
 }
 
-# This module creates private subnets in the specified availability zones.
+
 resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidrs)
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.dev-vpc.id
   cidr_block        = var.private_subnet_cidrs[count.index]
   availability_zone = element(var.azs, count.index)
 
@@ -67,11 +66,11 @@ resource "aws_nat_gateway" "nat" {
 
 # This module creates a route table for the public subnets and associates it with the public subnets.
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.dev-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw.id
+    gateway_id = aws_internet_gateway.igw.id
   }
 
   tags = {
@@ -89,7 +88,7 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_route_table" "private" {
   count  = length(var.private_subnet_cidrs)
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.dev-vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
